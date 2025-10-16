@@ -1,5 +1,8 @@
+import { Link, useNavigate } from "react-router-dom";
+
 export default function ProductCard(props) {
-  const product = props.product;
+    const navigate = useNavigate();
+    const product = props.product;
 
   return (
     <div className="w-[300px] h-[420px] bg-primary rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col justify-between group border border-secondary/10">
@@ -48,9 +51,9 @@ export default function ProductCard(props) {
         </p>
 
         {/* Button */}
-        <button className="mt-auto w-full h-[36px] border border-accent text-accent font-semibold text-sm rounded-lg transition-all duration-300 hover:bg-accent hover:text-white hover:shadow-md active:scale-95">
+        <Link to={"/overview/"+product.productID} className="mt-auto w-full h-[36px] border border-accent text-accent font-semibold text-sm rounded-lg transition-all duration-300 hover:bg-accent hover:text-white hover:shadow-md active:scale-95 flex justify-center items-center" >
           View Cart
-        </button>
+        </Link>
       </div>
     </div>
   );
