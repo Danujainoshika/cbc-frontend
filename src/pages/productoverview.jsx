@@ -1,9 +1,10 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Loading from "../components/loader"
 import toast from "react-hot-toast"
 import ImageSlider from "../components/imageslider"
+import { addToCart, LoadCart } from "../utils/cart"
 
 export default function ProductOverview() {
     const params = useParams()
@@ -64,8 +65,22 @@ export default function ProductOverview() {
                                 
                             }
                             <div className="w-full h-[40px] flex gap-4 mt-[60px]">
-                                <button className="w-[50%] h-full bg-accent text-white font-semibold rounded-lg hover:bg-accent/90 active:scale-95 transition-all duration-300">Add to Cart</button>
-                                <button className="w-[50%] h-full border border-accent text-accent font-semibold rounded-lg hover:bg-accent hover:text-white hover:shadow-md active:scale-95 transition-all duration-300 ml-4">Buy Now</button>
+                                <button className="w-[50%] h-full bg-accent text-white font-semibold rounded-lg hover:bg-accent/90 active:scale-95 transition-all duration-300" onClick={()=>{
+                                    addToCart(product,1)
+                                    toast.success("Product added to cart"); 
+                                }}>Add to Cart</button>
+                                <Link to="/checkout" className="w-[50%] h-full border border-accent text-accent font-semibold rounded-lg hover:bg-accent hover:text-white hover:shadow-md active:scale-95 transition-all duration-300 ml-4  flex justify-center items-center" 
+                                    state={
+                                        [{
+                                            productID : product.productID,
+                                            name : product.name,
+                                            price : product.price,
+                                            labelledPrice : product.labelledPrice,
+                                            quantity : 1,
+                                            image : product.images[0]
+                                        }]
+                                    }>
+                                Buy Now</Link>
                             </div>
                         </div>
                     </div>

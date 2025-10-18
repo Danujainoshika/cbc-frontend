@@ -10,9 +10,9 @@ export  function LoadCart(){
 }
 
 export function addToCart(product,quantity){
-    let cart = LoadCart
+    let cart = LoadCart()
 
-    const existingItemIndex = cart.findInex(
+    const existingItemIndex = cart.findIndex(
         (item)=>{
             return item.productID == product.productID
         }
@@ -30,6 +30,8 @@ export function addToCart(product,quantity){
                 name : product.name,
                 price : product.price,
                 labelledPrice : product.labelledPrice,
+                quantity : quantity,
+                image : product.images[0]
             }
         )
         cart.push(cartItem)
@@ -47,4 +49,16 @@ export function addToCart(product,quantity){
         }
     }
     localStorage.setItem("cart",JSON.stringify(cart))
+}
+
+export function getTotal(){
+    const cart = LoadCart()
+    let total = 0
+
+    cart.forEach(
+        (item)=>{
+            total += item.price * item.quantity
+        }
+    )
+    return total
 }
