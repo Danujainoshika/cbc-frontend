@@ -6,6 +6,7 @@ import { FiUsers } from "react-icons/fi";
 import AdminProductPage from "./admin/adminproductpage";
 import AddProductPage from "./admin/adminaddnewproduct";
 import UpdateProductPage from "./admin/adminupdateproduct";
+import AdminOrdersPage from "./admin/orders";
 
 export default function AdminPage(){
     return(
@@ -37,7 +38,7 @@ export default function AdminPage(){
                     <Routes>
                         <Route path="/" element={<h1>Dashboad</h1>}/>
                         <Route path="/products" element={<AdminProductPage/>}/>
-                        <Route path="/orders" element={<h1>Orders</h1>}/>
+                        <Route path="/orders" element={<AdminOrdersPage/>}/>
                         <Route path="/add-product" element={<AddProductPage/>}/>
                         <Route path="/update-product" element={<UpdateProductPage/>}/>
                     </Routes>
