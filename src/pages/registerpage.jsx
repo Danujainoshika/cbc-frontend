@@ -3,16 +3,18 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
 
-  async function login() {
+  async function register() {
     try {
       const response = await axios.post(
-        import.meta.env.VITE_API_URL + "/api/users/login",
-        { email, password }
+        import.meta.env.VITE_API_URL + "/api/users",
+        { email:email, password:password, firstname:firstName, lastname:lastName }
       );
       localStorage.setItem("token", response.data.token);
       const user = response.data.user;
@@ -20,13 +22,13 @@ export default function LoginPage() {
 
       if (user.role === "admin") {
         navigate("/admin");
-        toast.success("Login successful");
+        toast.success("Registration successful");
       } else {
         navigate("/");
-        toast.success("Login successful");
+        toast.success("Registration successful");
       }
     } catch (error) {
-      toast.error("Login failed. Please check your credentials");
+      toast.error("Registration failed. Please check your credentials");
     }
   }
 
@@ -51,18 +53,18 @@ export default function LoginPage() {
 
       {/* RIGHT — Login Form */}
       <div className="relative z-10 flex w-full md:w-1/2 justify-center items-center px-6 sm:px-10">
-        <div className="w-full max-w-md bg-white/20 backdrop-blur-2xl border border-white/30 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.1)] p-10 flex flex-col items-center animate-fadeIn">
+        <div className="w-full max-w-md bg-white/20 backdrop-blur-2xl border border-white/30 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.1)] p-5 flex flex-col items-center animate-fadeIn">
           
           {/* Logo */}
           <img
             src="/logo.png"
             alt="CBC Logo"
-            className="w-28 h-28 object-contain mb-3 drop-shadow-xl hover:scale-110 transition-transform duration-300"
+            className="w-[100px] h-[100px] object-cover  drop-shadow-xl hover:scale-110 transition-transform duration-300"
           />
 
           {/* Heading */}
           <h2 className="text-3xl font-bold text-[var(--color-primary)] mb-2 drop-shadow-sm text-center">
-            Welcome back ✨
+            Register
           </h2>
           <p className="text-sm text-[var(--color-primary)/80] mb-6 text-center">
             Log in to continue your beauty journey with <b>CBC</b>.
@@ -78,6 +80,28 @@ export default function LoginPage() {
               placeholder="Enter your email"
               className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
               onChange={(e) => setemail(e.target.value)}
+            />
+          </div>
+          <div className="w-full mb-3">
+            <label className="block text-sm font-medium text-[var(--color-primary)/90] mb-1">
+              First Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your First name"
+              className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+              onChange={(e)=>{setFirstName(e.target.value)}}
+            />
+          </div>
+          <div className="w-full mb-3">
+            <label className="block text-sm font-medium text-[var(--color-primary)/90] mb-1">
+              Last Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your Last name"
+              className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
 
@@ -96,7 +120,7 @@ export default function LoginPage() {
 
           {/* Login Button */}
           <button
-            onClick={login}
+            onClick={register}
             className="w-full h-12 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:scale-[1.04] transition-all duration-300"
           >
             Login
