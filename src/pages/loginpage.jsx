@@ -1,3 +1,4 @@
+import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -7,6 +8,15 @@ export default function LoginPage() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
+
+  const googleLogin = useGoogleLogin({
+      onSuccess : (response)=>{
+        console.log(response);
+        axios.post(import.meta.env.VITE_API_URL + "/api/users/googlelogin",{
+          token : response.access_token
+        })
+      }
+    })
 
   async function login() {
     try {
@@ -97,9 +107,15 @@ export default function LoginPage() {
           {/* Login Button */}
           <button
             onClick={login}
-            className="w-full h-12 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:scale-[1.04] transition-all duration-300"
+            className="w-full h-12 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:scale-[1.04] transition-all duration-300 mb-3"
           >
             Login
+          </button>
+          <button
+            onClick={googleLogin}
+            className="w-full h-12 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:scale-[1.04] transition-all duration-300"
+          >
+            Google Login
           </button>
 
           {/* Divider */}

@@ -9,6 +9,7 @@ import Test from './components/test.jsx'
 import LoginPage from './pages/loginpage.jsx'
 import { Toaster } from 'react-hot-toast'
 import RegisterPage from './pages/registerpage.jsx'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 function App() {
   
@@ -17,8 +18,9 @@ function App() {
     <>
       
       <BrowserRouter>
-        <Toaster position="top-right"/>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <div className='w-full h-[100vh] bg-red-500'>
+          <Toaster position="top-right"/>
           <Routes path="/">
             <Route path="/*" element={<HomePage/>}/>
             <Route path ="/login" element={<LoginPage/>}/>
@@ -27,6 +29,7 @@ function App() {
             <Route path="/test" element={<Test/>}/>
           </Routes>
         </div>
+        </GoogleOAuthProvider>
       </BrowserRouter>
      
       
