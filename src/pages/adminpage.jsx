@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import Loading from "../components/loader";
+import AdminUserPage from "./admin/adminuserpage";
 
 export default function AdminPage(){
     const [userLoaded,setUserLoaded] = useState(false)
@@ -76,6 +77,7 @@ export default function AdminPage(){
                         <Route path="/orders" element={<AdminOrdersPage/>}/>
                         <Route path="/add-product" element={<AddProductPage/>}/>
                         <Route path="/update-product" element={<UpdateProductPage/>}/>
+                        <Route path = "/users" element={<AdminUserPage/>}/>
                     </Routes>:<Loading/>}
                 </div>
                 

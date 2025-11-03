@@ -9,14 +9,27 @@ export default function LoginPage() {
   const [password, setpassword] = useState("");
   const navigate = useNavigate();
 
-  const googleLogin = useGoogleLogin({
-      onSuccess : (response)=>{
+	const googleLogin = useGoogleLogin({
+			onSuccess : (response)=>{
         console.log(response);
-        axios.post(import.meta.env.VITE_API_URL + "/api/users/googlelogin",{
-          token : response.access_token
+				axios.post(import.meta.env.VITE_API_URL + "/api/users/google-login",{
+					token : response.access_token
+				}).then((res)=>{
+            localStorage.setItem("token", res.data.token);
+            const user = res.data.user;
+            if(user.role === "admin"){
+              navigate("/admin");
+              toast.success("Login successful");
+            } else {
+              navigate("/");
+              toast.success("Login successful");
+            }
+        }).catch((err)=>{
+            toast.error("Google login failed");
         })
+      
       }
-    })
+    });
 
   async function login() {
     try {
