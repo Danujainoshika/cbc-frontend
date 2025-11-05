@@ -32,7 +32,7 @@ export default function UpdateProductPage() {
         
         try {
           
-            const urls = await Promise.all(promises)
+            let urls = await Promise.all(promises)
             if(images.length == 0){
               urls = location.state.images
             }
