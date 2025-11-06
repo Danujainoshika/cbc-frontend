@@ -54,7 +54,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col md:flex-row bg-[url('./bg.jpg')] bg-cover bg-center relative overflow-hidden">
+    <div className="w-full h-screen flex flex-col md:flex-row bg-[url('/bg.jpg')] bg-cover bg-center relative overflow-hidden">
       {/* Overlay with gradient & blur */}
       <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-secondary)/90] via-[var(--color-secondary)/60] to-[var(--color-accent)/50] backdrop-blur-sm"></div>
 

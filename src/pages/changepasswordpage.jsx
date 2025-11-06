@@ -42,7 +42,7 @@ export default function ChangePasswordPage() {
         }
     }
     return (
-        <div className="w-full h-screen flex flex-col md:flex-row bg-[url('./bg.jpg')] bg-cover bg-center justify-center items-center relative overflow-hidden">
+        <div className="w-full h-screen flex flex-col md:flex-row bg-[url('/bg.jpg')] bg-cover bg-center justify-center items-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-secondary)/90] via-[var(--color-secondary)/60] to-[var(--color-accent)/50] backdrop-blur-sm"></div>
                 <div className="relative z-10 flex w-full md:w-1/2 justify-center items-center px-6 sm:px-10 py-6 sm:py-16">
                     {step=="email" && <div className="w-full max-w-md bg-white/20 backdrop-blur-2xl border border-white/30 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.1)] p-6 sm:p-10 md:p-12 flex flex-col items-center animate-fadeIn space-y-2">
