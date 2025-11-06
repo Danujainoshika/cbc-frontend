@@ -67,15 +67,17 @@ export default function UserData() {
             <img
               src={user.image}
               alt="User"
+              referrerPolicy="no-referrer"
               className="w-8 h-8 rounded-full border-2 border-accent object-cover"
             />
           ) : (
             <FaUserCircle className="text-accent text-3xl" />
           )}
-
-          <span className="font-medium text-secondary capitalize">
-            {user.firstname}
-          </span>
+          
+            <span className="font-medium text-secondary   capitalize">
+              {user.firstname}
+            </span>
+          
 
           <select className="bg-accent text-primary text-sm px-2 py-1 rounded-md outline-none cursor-pointer hover:bg-[#ffad33] transition-all duration-300" onChange={
             (e)=>{

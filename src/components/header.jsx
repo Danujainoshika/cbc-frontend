@@ -45,7 +45,7 @@ export default function Header(){
                     <Link to="/contact">contact</Link>
                     
                 </div>
-                <div className="hidden h-full w-[200px] absolute right-[100px] lg:flex justify-center items-center">
+                <div className=" hidden h-full w-[400px] absolute right-[0px] lg:flex justify-center items-center">
                     <UserData/>
                 </div>
                 <Link to="/cart" className="hidden lg:absolute right-[0px] text-2xl lg:flex justify-center items-center w-[60px] h-full ">
