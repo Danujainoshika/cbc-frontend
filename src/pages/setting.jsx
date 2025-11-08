@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useMemo, useEffect } from "react";
-import mediaUpload from "../utils/mediaUpload";
+import mediaUpload from "../utils/mediaupload";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FiUpload, FiUser, FiLock } from "react-icons/fi";
