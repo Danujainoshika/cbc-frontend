@@ -84,9 +84,15 @@ export default function UserData() {
               if(e.target.value=="Logout"){
                 setIsLogoutConfirm(true);
               }
+              if(e.target.value=="Account Settings"){
+                navigate("/settings");
+              }
+              if(e.target.value=="Orders"){
+                navigate("/orders");
+              }
             }}>
             <option value="">Menu</option>
-            <option>Account Settings</option>
+            <option >Account Settings</option>
             <option>Orders</option>
             <option>Logout</option>
           </select>
