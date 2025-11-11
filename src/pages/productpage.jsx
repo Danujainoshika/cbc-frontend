@@ -28,6 +28,22 @@ export default function ProductPage(){
     return( 
         
         <div className="w-full min-h-[calc(100%-100px)] bg-primary  ">
+            <div className="w-full h-[100px] flex justify-center items-center ">
+                <input type="text" className="h-[40px] w-[50%] border-2 border-accent rounded-full p-2" placeholder="Search items" onChange={
+                   async (e)=>{
+                        try {
+                            if(e.target.value == ""){
+                                setIsLoading(true)
+                            }else{
+                               const searchResult =  await axios.get(import.meta.env.VITE_API_URL+"/api/products/search/"+ e.target.value)
+                               setProducts(searchResult.data);
+                            }
+                        } catch (error) {
+                            
+                        }
+                    }
+                }/>
+            </div>
            
             {
                isLoading?<Loading/>
