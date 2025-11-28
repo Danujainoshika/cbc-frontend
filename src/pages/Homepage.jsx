@@ -5,6 +5,7 @@ import ProductOverview from "./productoverview";
 import CartPage from "./cart";
 import CheckoutPage from "./checkoutpage";
 import { LandingPage } from "./landingpage";
+import { AboutSection } from "../components/aboutsection";
 
 export default function HomePage(){
     return(
