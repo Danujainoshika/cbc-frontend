@@ -1,5 +1,6 @@
 import { AboutSection } from "../components/aboutsection";
 import { BenefitSection } from "../components/benifitsection";
+import { Footer } from "../components/footer";
 import { HeroSection } from "../components/herosection";
 
 export function LandingPage() {
@@ -8,6 +9,7 @@ export function LandingPage() {
             <HeroSection/>
             <BenefitSection/>
             <AboutSection/>
+            <Footer/>
         </div>
     )
 }
