@@ -1,6 +1,8 @@
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function HeroSection() {
+    const navigate = useNavigate();
   return (
     <section className="w-full px-[100px] py-10 flex items-center justify-between gap-10 relative">
 
@@ -28,7 +30,8 @@ export function HeroSection() {
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-5 pt-4">
-          <button className="px-8 py-4 bg-accent text-white rounded-full hover:bg-accent/80 transition-all flex items-center gap-2 shadow-lg hover:shadow-xl text-sm tracking-wide">
+          <button className="px-8 py-4 bg-accent text-white rounded-full hover:bg-accent/80 transition-all flex items-center gap-2 shadow-lg hover:shadow-xl text-sm tracking-wide"
+          onClick={() => {navigate("/products")}}>
             Shop Now
             <FaArrowRight size={18} />
           </button>
