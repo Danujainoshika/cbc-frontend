@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="bg-secondary text-primary relative overflow-hidden w-full pt-20"
+      className="bg-secondary text-primary relative overflow-hidden w-full pt-20 scroll-mt-[120px]"
     >
       {/* Accent Background Glow */}
       <div className="absolute inset-0">
