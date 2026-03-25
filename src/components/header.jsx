@@ -7,7 +7,7 @@ import UserData from "./userdata";
 export default function Header(){
     const [isSideBarOpen,setIsSideBarOpen] = useState(false)
     return(
-        <header className="w-full h-[100px] bg-accent text-white px-[40px]">
+        <header className="fixed top-0 left-0 z-50 w-full h-[100px] bg-accent text-white px-[40px] shadow-md">
             <div className="w-full h-full flex relative  ">
                 <img src="./logo.png" className="hidden lg:flex h-full w-[200px] object-cover absolute left-[0px]"  />
                 

@@ -9,7 +9,7 @@ import { AboutSection } from "../components/aboutsection";
 
 export default function HomePage(){
     return(
-        <div className="w-full h-full bg-primary ">
+        <div className="w-full h-full bg-primary pt-[100px]">
             <Header/>
             <Routes path="/">
                 <Route path="/" element={<LandingPage/>}/>

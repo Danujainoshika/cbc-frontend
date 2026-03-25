@@ -9,36 +9,78 @@ export default function RegisterPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  async function register() {
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match.");
+  function validateForm() {
+    const nextErrors = {};
+
+    if (!email.trim()) {
+      nextErrors.email = "Email is required.";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      nextErrors.email = "Enter a valid email address.";
+    }
+
+    if (!firstName.trim()) {
+      nextErrors.firstName = "First name is required.";
+    }
+
+    if (!lastName.trim()) {
+      nextErrors.lastName = "Last name is required.";
+    }
+
+    if (!password) {
+      nextErrors.password = "Password is required.";
+    } else if (password.length < 6) {
+      nextErrors.password = "Password must be at least 6 characters.";
+    }
+
+    if (!confirmPassword) {
+      nextErrors.confirmPassword = "Please confirm your password.";
+    } else if (password !== confirmPassword) {
+      nextErrors.confirmPassword = "Passwords do not match.";
+    }
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  }
+
+  async function register(e) {
+    e.preventDefault();
+    if (!validateForm()) {
+      toast.error("Please fix the highlighted fields.");
       return;
     }
+
+    setIsSubmitting(true);
     try {
       await axios.post(import.meta.env.VITE_API_URL + "/api/users/", {
-        email: email,
-        password: password,
-        firstname: firstName,
-        lastname: lastName,
+        email: email.trim(),
+        password,
+        firstname: firstName.trim(),
+        lastname: lastName.trim(),
       });
       toast.success("Registration successful. Please login.");
       navigate("/login");
     } catch (error) {
-      toast.error("Registration failed. Please try again.");
+      const message = error?.response?.data?.message || "Registration failed. Please try again.";
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
     
-    <div className="w-full h-screen flex flex-col md:flex-row bg-[url('/bg.jpg')] bg-cover bg-center relative overflow-hidden overflow-y-scroll">
+    <div className="w-full min-h-screen flex flex-col md:flex-row bg-[url('/bg.jpg')] bg-cover bg-center relative overflow-hidden">
       {/* Overlay */}
-      <div className="absolute  inset-0 bg-gradient-to-br from-[var(--color-secondary)/90] via-[var(--color-secondary)/60] to-[var(--color-accent)/50] backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-secondary)/90] via-[var(--color-secondary)/65] to-[var(--color-accent)/45] backdrop-blur-sm"></div>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_42%),radial-gradient(circle_at_80%_0%,rgba(255,157,0,0.24),transparent_35%)]"></div>
 
       {/* LEFT — Brand Section */}
       <div className="relative z-10 hidden md:flex w-1/2 flex-col justify-center px-16 text-[var(--color-primary)]">
-        <h1 className="text-6xl font-bold mb-4 leading-tight drop-shadow-lg">
+        <h1 className="text-6xl font-bold mb-4 leading-tight drop-shadow-lg tracking-tight">
           Crystal <span className="text-[var(--color-accent)]">Beauty</span> Clear
         </h1>
         <p className="text-lg text-[var(--color-primary)/90] leading-relaxed max-w-lg drop-shadow-sm">
@@ -51,20 +93,28 @@ export default function RegisterPage() {
       </div>
 
       {/* RIGHT — Register Form */}
-      <div className="relative z-10 flex w-full md:w-1/2 justify-center items-center px-6 sm:px-10 py-6 sm:py-16">
-        <div className="w-full max-w-md bg-white/20 backdrop-blur-2xl border border-white/30 rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.1)] p-6 sm:p-10 md:p-12 flex flex-col items-center animate-fadeIn space-y-2">
+      <div className="relative z-10 flex w-full md:w-1/2 justify-center items-center px-5 sm:px-10 py-8 sm:py-16">
+        <form
+          onSubmit={register}
+          className="w-full max-w-lg bg-gradient-to-b from-white/25 to-white/10 backdrop-blur-2xl border border-white/35 rounded-3xl shadow-[0_24px_70px_rgba(20,20,20,0.35)] p-6 sm:p-9 md:p-10 flex flex-col items-center animate-fadeIn"
+          noValidate
+        >
+          <div className="absolute -inset-px -z-10 rounded-3xl bg-gradient-to-r from-white/20 via-transparent to-[var(--color-accent)]/35 blur-sm"></div>
           
           {/* Logo */}
           <img
             src="/logo.png"
             alt="CBC Logo"
-            className="w-[100px] h-[100px]  object-cover drop-shadow-xl mb-2 hover:scale-110 transition-transform duration-300"
+            className="w-[128px] h-[128px] sm:w-[144px] sm:h-[144px] object-cover drop-shadow-xl mb-3 hover:scale-105 transition-transform duration-300"
           />
 
           {/* Heading */}
-          <h2 className="text-3xl font-bold text-[var(--color-primary)]  drop-shadow-sm text-center">
+          <h2 className="text-3xl font-bold text-[var(--color-primary)] drop-shadow-sm text-center tracking-tight">
             Register
           </h2>
+          <p className="text-sm text-[var(--color-primary)/80] text-center mb-6">
+            Create your account to continue your beauty journey with <b>CBC</b>.
+          </p>
 
           {/* Input Fields */}
           <div className="w-full space-y-4">
@@ -73,35 +123,49 @@ export default function RegisterPage() {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 placeholder="Enter your email"
-                className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+                className={`w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/95 border border-transparent text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:border-[var(--color-accent)]/40 focus:outline-none placeholder-[var(--color-secondary)/55] transition-all shadow-sm ${
+                  errors.email ? "ring-2 ring-red-400" : ""
+                }`}
+                value={email}
                 onChange={(e) => setemail(e.target.value)}
               />
+              {errors.email && <p className="mt-1 text-xs text-red-200">{errors.email}</p>}
             </div>
 
-            <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
               <label className="block text-sm font-medium text-[var(--color-primary)/90] mb-1">
                 First Name
               </label>
               <input
                 type="text"
                 placeholder="Enter your first name"
-                className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+                className={`w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/95 border border-transparent text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:border-[var(--color-accent)]/40 focus:outline-none placeholder-[var(--color-secondary)/55] transition-all shadow-sm ${
+                  errors.firstName ? "ring-2 ring-red-400" : ""
+                }`}
+                value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
-            </div>
+              {errors.firstName && <p className="mt-1 text-xs text-red-200">{errors.firstName}</p>}
+              </div>
 
-            <div>
+              <div>
               <label className="block text-sm font-medium text-[var(--color-primary)/90] mb-1">
                 Last Name
               </label>
               <input
                 type="text"
                 placeholder="Enter your last name"
-                className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+                className={`w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/95 border border-transparent text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:border-[var(--color-accent)]/40 focus:outline-none placeholder-[var(--color-secondary)/55] transition-all shadow-sm ${
+                  errors.lastName ? "ring-2 ring-red-400" : ""
+                }`}
+                value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
+              {errors.lastName && <p className="mt-1 text-xs text-red-200">{errors.lastName}</p>}
+              </div>
             </div>
 
             <div>
@@ -111,9 +175,13 @@ export default function RegisterPage() {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+                className={`w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/95 border border-transparent text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:border-[var(--color-accent)]/40 focus:outline-none placeholder-[var(--color-secondary)/55] transition-all shadow-sm ${
+                  errors.password ? "ring-2 ring-red-400" : ""
+                }`}
+                value={password}
                 onChange={(e) => setpassword(e.target.value)}
               />
+              {errors.password && <p className="mt-1 text-xs text-red-200">{errors.password}</p>}
             </div>
 
             <div>
@@ -123,18 +191,23 @@ export default function RegisterPage() {
               <input
                 type="password"
                 placeholder="Re-enter your password"
-                className="w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/90 text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/50 focus:outline-none placeholder-[var(--color-secondary)/50] transition-all shadow-sm"
+                className={`w-full h-12 px-4 rounded-xl bg-[var(--color-primary)]/95 border border-transparent text-[var(--color-secondary)] focus:ring-4 focus:ring-[var(--color-accent)]/40 focus:border-[var(--color-accent)]/40 focus:outline-none placeholder-[var(--color-secondary)/55] transition-all shadow-sm ${
+                  errors.confirmPassword ? "ring-2 ring-red-400" : ""
+                }`}
+                value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
+              {errors.confirmPassword && <p className="mt-1 text-xs text-red-200">{errors.confirmPassword}</p>}
             </div>
           </div>
 
           {/* Register Button */}
           <button
-            onClick={register}
-            className="w-full h-12 mt-6 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:scale-[1.04] transition-all duration-300"
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full h-12 mt-6 bg-gradient-to-r from-[var(--color-accent)] to-amber-500 text-[var(--color-primary)] font-semibold rounded-xl shadow-lg hover:shadow-[0_0_25px_rgba(255,157,0,0.6)] hover:brightness-105 hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            Register
+            {isSubmitting ? "Registering..." : "Register"}
           </button>
 
           {/* Divider */}
@@ -151,7 +224,7 @@ export default function RegisterPage() {
               Login
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );
