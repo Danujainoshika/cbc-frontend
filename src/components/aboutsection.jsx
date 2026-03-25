@@ -2,7 +2,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="py-24 bg-transparent relative overflow-hidden w-full"
+      className="py-24 bg-transparent relative overflow-hidden w-full scroll-mt-[120px]"
     >
       {/* Soft Accent Glow to Blend with bg-primary */}
       <div className="absolute -top-20 -left-10 w-96 h-96 bg-accent/10 blur-3xl rounded-full opacity-60"></div>

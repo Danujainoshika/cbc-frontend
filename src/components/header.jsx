@@ -26,11 +26,11 @@ export default function Header(){
                                     <img src="./logo.png" className=" h-full w-[200px] object-cover "  />
                                     
                                 </div>
-                                <a href="/" className="p-4 border-b-secondary/10">Home</a>
-                                <a href="/products" className="p-4 border-b-secondary/10">Products</a>
-                                <a href="/about" className="p-4 border-b-secondary/10">About</a>
-                                <a href="/contact" className="p-4 border-b-secondary/10">Contact</a>
-                                <a href="/cart" className="p-4 border-b-secondary/10">Cart</a>
+                                <Link to="/" className="p-4 border-b-secondary/10" onClick={() => setIsSideBarOpen(false)}>Home</Link>
+                                <Link to="/products" className="p-4 border-b-secondary/10" onClick={() => setIsSideBarOpen(false)}>Products</Link>
+                                <Link to="/#about" className="p-4 border-b-secondary/10" onClick={() => setIsSideBarOpen(false)}>About</Link>
+                                <Link to="/#contact" className="p-4 border-b-secondary/10" onClick={() => setIsSideBarOpen(false)}>Contact</Link>
+                                <Link to="/cart" className="p-4 border-b-secondary/10" onClick={() => setIsSideBarOpen(false)}>Cart</Link>
                                 <div className=" lg:hidden h-[100px] w-full absolute bottom-0 flex justify-center items-center ">
                                     <UserData/>
                                 </div>
@@ -41,8 +41,8 @@ export default function Header(){
                 <div className="hidden h-full  lg:flex justify-center items-center w-full text-lg gap-[20px] " >
                     <Link to="/">Home</Link>
                     <Link to="/products">Products</Link>
-                    <Link to="/about">About</Link>
-                    <Link to="/contact">contact</Link>
+                    <Link to="/#about">About</Link>
+                    <Link to="/#contact">Contact</Link>
                     
                 </div>
                 <div className=" hidden h-full w-[400px] absolute right-[0px] lg:flex justify-center items-center">
